@@ -24,6 +24,7 @@ document.getElementById("drawCard").addEventListener("click", () => {
   const card = cards[randomIndex];
   const isUpright = Math.random() > 0.5;
 
+  // HTML 삽입
   document.getElementById("result").innerHTML = `
     <div class="card-container">
       <div class="card">
@@ -31,7 +32,7 @@ document.getElementById("drawCard").addEventListener("click", () => {
         <div class="card-back">
           <img src="cards/back.jpg" alt="카드 뒷면">
         </div>
-        <!-- 앞면 (개별 카드 이미지) -->
+        <!-- 앞면 -->
         <div class="card-front ${isUpright ? "" : "reversed"}">
           <img src="${card.img}" alt="${card.name}">
         </div>
@@ -43,10 +44,8 @@ document.getElementById("drawCard").addEventListener("click", () => {
     </div>
   `;
 
-  // 애니메이션 트리거
-setTimeout(() => {
-  document.querySelector(".card").classList.add("flipped");
-}, 300);
-
+  // 뒤집기 애니메이션 실행
+  setTimeout(() => {
+    document.querySelector(".card").classList.add("flipped");
+  }, 300);
 });
-
