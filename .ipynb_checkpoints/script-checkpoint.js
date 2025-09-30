@@ -24,28 +24,26 @@ document.getElementById("drawCard").addEventListener("click", () => {
   const card = cards[randomIndex];
   const isUpright = Math.random() > 0.5;
 
-  // HTML 삽입
-  document.getElementById("result").innerHTML = `
-    <div class="card-container">
-      <div class="card">
-        <!-- 뒷면 -->
-        <div class="card-back">
-          <img src="cards/back.jpg" alt="카드 뒷면">
-        </div>
-        <!-- 앞면 -->
-        <div class="card-front ${isUpright ? "" : "reversed"}">
-          <img src="${card.img}" alt="${card.name}">
-        </div>
-      </div>
-      <div class="card-text">
-        <h2>${card.name} (${isUpright ? "정위" : "역위"})</h2>
-        <p>${isUpright ? card.upright : card.reversed}</p>
-      </div>
-    </div>
-  `;
+  // 앞면 이미지 교체
+  const frontImg = document.getElementById("cardFrontImg");
+  frontImg.src = card.img;
+  frontImg.alt = card.name;
 
-  // 뒤집기 애니메이션 실행
-  setTimeout(() => {
-    document.querySelector(".card").classList.add("flipped");
-  }, 300);
+  // 역위일 경우 이미지 뒤집기
+  if (isUpright) {
+    frontImg.style.transform = "rotate(0deg)";
+  } else {
+    frontImg.style.transform = "rotate(180deg)";
+  }
+
+  // 카드 뒤집기
+  const cardElement = document.getElementById("tarotCard");
+  cardElement.classList.add("flipped");
+
+  // 해설 텍스트 교체
+  const cardText = document.getElementById("cardText");
+  cardText.innerHTML = `
+    <h2>${card.name} (${isUpright ? "정위" : "역위"})</h2>
+    <p>${isUpright ? card.upright : card.reversed}</p>
+  `;
 });
