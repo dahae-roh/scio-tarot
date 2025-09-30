@@ -84,4 +84,7 @@ button:hover {
 .card-text {
   margin-top: 15px;
   text-align: center;
+  transition: opacity 0.5s; /* 부드럽게 나타나도록 */
+  opacity: 1;
 }
+

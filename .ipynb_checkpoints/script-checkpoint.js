@@ -24,26 +24,35 @@ document.getElementById("drawCard").addEventListener("click", () => {
   const card = cards[randomIndex];
   const isUpright = Math.random() > 0.5;
 
-  // 앞면 이미지 교체
+  const cardElement = document.getElementById("tarotCard");
   const frontImg = document.getElementById("cardFrontImg");
+  const cardText = document.getElementById("cardText");
+
+  // 1. transition 끄고 즉시 뒷면으로 리셋
+  cardElement.style.transition = "none";
+  cardElement.classList.remove("flipped");
+  void cardElement.offsetWidth; // 강제 리플로우
+
+  // 2. 텍스트 숨기기
+  cardText.style.opacity = "0";
+
+  // 3. 새 카드 이미지 준비
   frontImg.src = card.img;
   frontImg.alt = card.name;
+  frontImg.style.transform = isUpright ? "rotate(0deg)" : "rotate(180deg)";
 
-  // 역위일 경우 이미지 뒤집기
-  if (isUpright) {
-    frontImg.style.transform = "rotate(0deg)";
-  } else {
-    frontImg.style.transform = "rotate(180deg)";
-  }
+  // 4. 카드 회전 시작
+  setTimeout(() => {
+    cardElement.style.transition = "transform 1s";
+    cardElement.classList.add("flipped");
 
-  // 카드 뒤집기
-  const cardElement = document.getElementById("tarotCard");
-  cardElement.classList.add("flipped");
-
-  // 해설 텍스트 교체
-  const cardText = document.getElementById("cardText");
-  cardText.innerHTML = `
-    <h2>${card.name} (${isUpright ? "정위" : "역위"})</h2>
-    <p>${isUpright ? card.upright : card.reversed}</p>
-  `;
+    // 5. 카드 회전이 끝난 후 텍스트 교체 + 페이드인
+    setTimeout(() => {
+      cardText.innerHTML = `
+        <h2>${card.name} (${isUpright ? "정위" : "역위"})</h2>
+        <p>${isUpright ? card.upright : card.reversed}</p>
+      `;
+      cardText.style.opacity = "1";
+    }, 1000); // 카드 회전 애니메이션(1s) 끝난 후
+  }, 300);
 });
