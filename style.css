@@ -40,7 +40,7 @@ button:hover {
 /* 카드 기본 */
 .card {
   width: 220px;
-  height: 320px;
+  height: 380px;
   position: relative;
   transform-style: preserve-3d;
   transition: transform 1s;
